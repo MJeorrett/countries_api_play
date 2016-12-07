@@ -35,6 +35,7 @@ var populateCountriesSelect = function(){
 
 var setCountryInfo = function(countryName){
   var infoDiv = document.querySelector( '#country-info-holder' );
+  infoDiv.innerText = "";
   var ul = document.createElement( 'ul' );
   var country = getCountryByName( countryName );
   var dataDisplay = [ 'name', 'capital', 'population' ];
