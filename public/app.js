@@ -39,6 +39,7 @@ var populateCountriesSelect = function(){
 
 var populateBorderingCountries = function(countries){
   var selectBorderingCountries = document.querySelector('#bordering-countries-select');
+  selectBorderingCountries.onchange = handleBorderingCountrySelected;
 
   if(countries && countries.length > 0){
     selectBorderingCountries.disabled = false;
@@ -65,13 +66,19 @@ var populateSelect = function( select, stringList ) {
 
 var setCountryInfo = function( countryName) {
   var infoDiv = document.querySelector( '#country-info-holder' );
-  infoDiv.innerText = "";
-  setCountryInfoDiv( infoDiv, countryName );
+  populateCountryInfoDiv( infoDiv, countryName );
 
   localStorage.lastCountry = countryName;
 };
 
-var setCountryInfoDiv = function( infoDiv, countryName ) {
+var setBorderingCountryInfo = function( countryName ) {
+  var infoDiv = document.querySelector( '#bordering-country-info-holder' );
+  populateCountryInfoDiv( infoDiv, countryName );
+}
+
+var populateCountryInfoDiv = function( infoDiv, countryName ) {
+  infoDiv.innerText = "";
+
   var country = getCountryByName( countryName );
   var ul = document.createElement( 'ul' );
   var dataDisplay = [ 'name', 'capital', 'population' ];
@@ -97,6 +104,11 @@ var handleCountrySelected = function( ev ) {
   setCountryInfo(countryName);
 
   populateBorderingCountries(borderingCountries);
+}
+
+var handleBorderingCountrySelected = function( ev ) {
+  var countryName = ev.target.value;
+  setBorderingCountryInfo( countryName );
 }
 
 var getCountryByName = function( countryName ) {
