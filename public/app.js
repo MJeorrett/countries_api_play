@@ -18,6 +18,7 @@ var makeRequest = function(url, callBack){
 var requestComplete = function(){
   countries = JSON.parse(this.responseText)
   populateCountriesSelect();
+  populateBorderingCountries();
   var lastCountry = localStorage.lastCountry;
   if(lastCountry) {
     setSelectedCountry(lastCountry);
@@ -36,8 +37,22 @@ var populateCountriesSelect = function(){
   populateSelect( selectCountries, countryNames );
 };
 
-var populateSelect = function( select, stringList ) {
+var populateBorderingCountries = function(countries){
+  var selectBorderingCountries = document.querySelector('#bordering-countries-select');
+  
+  if(countries){
+    var countryNames = countries.map(function(country){
+      return country.name;
+    });
+    populateSelect(selectBorderingCountries, countryNames);
+  }
+  else {
+    selectBorderingCountries.innerHTML = "<option value='' disabled selected>Select a bordering country</option>";
+  }
+};
 
+var populateSelect = function( select, stringList ) {
+  select.innerHTML = "<option value='' disabled selected>Select a bordering country</option>";
   stringList.forEach(function(string){
     var option = document.createElement('option');
     option.innerText = string;
@@ -70,13 +85,26 @@ var setSelectedCountry = function(countryName){
 
 var handleCountrySelected = function( ev ) {
   var countryName = ev.target.value;
+  var borderingCountries = getBorderingCountries(countryName);
   setCountryInfo(countryName);
+
+  populateBorderingCountries(borderingCountries);
 }
 
 var getCountryByName = function( countryName ) {
   return countries.find( function( country ) {
     return country.name === countryName;
   });
+}
+
+var getBorderingCountries = function(countryName){
+  var country = getCountryByName(countryName);
+  var borderingCountryCodes = country.borders;
+  var borderingCountries = countries.filter(function(country){
+    var countryCode = country.alpha3Code;
+    return borderingCountryCodes.includes(countryCode);
+  })
+  return borderingCountries;
 }
 
 window.onload = app;
