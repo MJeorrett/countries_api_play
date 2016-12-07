@@ -28,10 +28,20 @@ var requestComplete = function(){
 var populateCountriesSelect = function(){
   var selectCountries = document.getElementById('countries-select');
   selectCountries.onchange = handleCountrySelected;
-  countries.forEach(function(country){
+
+  var countryNames = countries.map( function( country ) {
+    return country.name;
+  });
+
+  populateSelect( selectCountries, countryNames );
+};
+
+var populateSelect = function( select, stringList ) {
+
+  stringList.forEach(function(string){
     var option = document.createElement('option');
-    option.innerText = country.name;
-    selectCountries.appendChild(option);
+    option.innerText = string;
+    select.appendChild(option);
   });
 }
 
