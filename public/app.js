@@ -19,8 +19,10 @@ var requestComplete = function(){
   countries = JSON.parse(this.responseText)
   populateCountriesSelect();
   var lastCountry = localStorage.lastCountry;
-  if(lastCountry) setSelectedCountry(lastCountry);
-  setCountryInfo(lastCountry);
+  if(lastCountry) {
+    setSelectedCountry(lastCountry);
+    setCountryInfo(lastCountry);
+  }
 };
 
 var populateCountriesSelect = function(){
