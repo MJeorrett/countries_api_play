@@ -39,16 +39,19 @@ var populateCountriesSelect = function(){
 
 var populateBorderingCountries = function(countries){
   var selectBorderingCountries = document.querySelector('#bordering-countries-select');
-  
-  if(countries){
+
+  if(countries && countries.length > 0){
+    selectBorderingCountries.disabled = false;
     var countryNames = countries.map(function(country){
       return country.name;
     });
     populateSelect(selectBorderingCountries, countryNames);
   }
   else {
-    selectBorderingCountries.innerHTML = "<option value='' disabled selected>Select a bordering country</option>";
+    selectBorderingCountries.innerHTML = "<option value='' disabled selected>There are no bordering countries</option>";
+    selectBorderingCountries.disabled = true;
   }
+
 };
 
 var populateSelect = function( select, stringList ) {
