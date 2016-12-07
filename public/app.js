@@ -63,11 +63,17 @@ var populateSelect = function( select, stringList ) {
   });
 }
 
-var setCountryInfo = function(countryName){
+var setCountryInfo = function( countryName) {
   var infoDiv = document.querySelector( '#country-info-holder' );
   infoDiv.innerText = "";
-  var ul = document.createElement( 'ul' );
+  setCountryInfoDiv( infoDiv, countryName );
+
+  localStorage.lastCountry = countryName;
+};
+
+var setCountryInfoDiv = function( infoDiv, countryName ) {
   var country = getCountryByName( countryName );
+  var ul = document.createElement( 'ul' );
   var dataDisplay = [ 'name', 'capital', 'population' ];
 
   dataDisplay.forEach( function( dataKey ) {
@@ -76,10 +82,9 @@ var setCountryInfo = function(countryName){
     li.innerText = dataKey + ": " + dataValue;
     ul.appendChild( li );
   });
-  infoDiv.appendChild( ul );
 
-  localStorage.lastCountry = countryName;
-}
+  infoDiv.appendChild( ul );
+};
 
 var setSelectedCountry = function(countryName){
   var selectCountries = document.querySelector('#countries-select');
