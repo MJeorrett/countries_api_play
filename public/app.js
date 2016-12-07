@@ -18,9 +18,8 @@ var makeRequest = function(url, callBack){
 
 var requestComplete = function(){
   countries = JSON.parse(this.responseText)
-  console.log(countries);
   populateCountriesSelect();
-  
+
 };
 
 var populateCountriesSelect = function(){
