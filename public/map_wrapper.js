@@ -16,6 +16,13 @@ MapWrapper.prototype = {
       map: this.map
     });
     this.markers.push(marker);
+
+    var bounds = new google.maps.LatLngBounds();
+    this.markers.forEach(function(marker){
+      bounds.extend(marker.getPosition());
+    });
+    bounds.extend(this.map.getCenter());
+    this.map.fitBounds(bounds);
   },
 
   clearMarkers: function() {

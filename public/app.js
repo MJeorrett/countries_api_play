@@ -121,6 +121,7 @@ var handleCountrySelected = function( ev ) {
   setBorderingCountryInfo( null );
   moveMapToCountry( countryName );
   mapWrapper.clearMarkers();
+  mapWrapper.map.setZoom(6);
 }
 
 var handleBorderingCountrySelected = function( ev ) {
