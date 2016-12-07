@@ -1,6 +1,5 @@
 (function(){
 
-  console.log("app js started");
 
 var countries = null;
 var mapWrapper = null;
@@ -121,11 +120,13 @@ var handleCountrySelected = function( ev ) {
   populateBorderingCountries(borderingCountries);
   setBorderingCountryInfo( null );
   moveMapToCountry( countryName );
+  mapWrapper.clearMarkers();
 }
 
 var handleBorderingCountrySelected = function( ev ) {
   var countryName = ev.target.value;
   setBorderingCountryInfo( countryName );
+  dropMarkerOnCountry( countryName );
 }
 
 var getCountryByName = function( countryName ) {
@@ -145,13 +146,23 @@ var getBorderingCountries = function(countryName){
 }
 
 var moveMapToCountry = function( countryName ) {
+  var latLng = getLatLngOfCountryName(countryName);
+  mapWrapper.map.setCenter( latLng );
+};
+
+var getLatLngOfCountryName = function( countryName ){
   var country = getCountryByName( countryName );
   var latLngArray = country.latlng;
   var latLng = {
     lat: latLngArray[0],
     lng: latLngArray[1]
   };
-  mapWrapper.map.setCenter( latLng );
+  return latLng;
+};
+
+var dropMarkerOnCountry = function( countryName ){
+  var latLng = getLatLngOfCountryName( countryName );
+  mapWrapper.addMarker( latLng );
 };
 
 window.onload = app;
