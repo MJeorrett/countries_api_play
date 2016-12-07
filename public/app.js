@@ -3,11 +3,12 @@
   console.log("app js started");
 
 var countries = null;
+var mapWrapper = null;
 
 var app = function(){
   var mapContainer = document.querySelector('#map-container');
   var center = { lat: 46.81, lng: 8.22 };
-  mainMap = new MapWrapper(mapContainer, center, 6);
+  mapWrapper = new MapWrapper(mapContainer, center, 6);
 
   var url = 'https://restcountries.eu/rest/v1/all';
   makeRequest(url, requestComplete);
@@ -30,6 +31,7 @@ var requestComplete = function(){
     setCountryInfo(lastCountry);
     var borderingCountries = getBorderingCountries(lastCountry);
     populateBorderingCountries(borderingCountries);
+    moveMapToCountry( lastCountry );
   }
 };
 
@@ -80,7 +82,7 @@ var setCountryInfo = function( countryName) {
 
 var setBorderingCountryInfo = function( countryName ) {
   var infoDiv = document.querySelector( '#bordering-country-info-holder' );
-  
+
   if (countryName ) {
     populateCountryInfoDiv( infoDiv, countryName );
   }
@@ -118,6 +120,7 @@ var handleCountrySelected = function( ev ) {
 
   populateBorderingCountries(borderingCountries);
   setBorderingCountryInfo( null );
+  moveMapToCountry( countryName );
 }
 
 var handleBorderingCountrySelected = function( ev ) {
@@ -140,6 +143,16 @@ var getBorderingCountries = function(countryName){
   })
   return borderingCountries;
 }
+
+var moveMapToCountry = function( countryName ) {
+  var country = getCountryByName( countryName );
+  var latLngArray = country.latlng;
+  var latLng = {
+    lat: latLngArray[0],
+    lng: latLngArray[1]
+  };
+  mapWrapper.map.setCenter( latLng );
+};
 
 window.onload = app;
 
