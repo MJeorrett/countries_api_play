@@ -1,8 +1,13 @@
 (function(){
 
+  console.log("app js started");
+
 var countries = null;
 
 var app = function(){
+  var mapContainer = document.querySelector('#map-container');
+  var center = { lat: 46.81, lng: 8.22 };
+  mainMap = new MapWrapper(mapContainer, center, 6);
 
   var url = 'https://restcountries.eu/rest/v1/all';
   makeRequest(url, requestComplete);
