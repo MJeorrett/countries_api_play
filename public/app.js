@@ -34,6 +34,7 @@
 
   var populateCountriesSelect = function(){
     var selectCountries = document.getElementById('countries-select');
+    selectCountries.innerHTML = "<option value='' disabled selected>Select a country</option>";
     selectCountries.onchange = handleCountrySelected;
 
     var countryNames = countries.map( function( country ) {
@@ -45,6 +46,7 @@
 
   var populateBorderingCountries = function(countries){
     var selectBorderingCountries = document.querySelector('#bordering-countries-select');
+    selectBorderingCountries.innerHTML = "<option value='' disabled selected>Select a bordering country</option>";
     selectBorderingCountries.onchange = handleBorderingCountrySelected;
 
     if(countries && countries.length > 0){
@@ -62,7 +64,6 @@
   };
 
   var populateSelect = function( select, stringList ) {
-    select.innerHTML = "<option value='' disabled selected>Select a bordering country</option>";
     stringList.forEach(function(string){
       var option = document.createElement('option');
       option.innerText = string;
