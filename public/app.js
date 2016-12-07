@@ -18,7 +18,9 @@ var makeRequest = function(url, callBack){
 var requestComplete = function(){
   countries = JSON.parse(this.responseText)
   populateCountriesSelect();
-
+  var lastCountry = localStorage.lastCountry;
+  if(lastCountry) setSelectedCountry(lastCountry);
+  setCountryInfo(lastCountry);
 };
 
 var populateCountriesSelect = function(){
@@ -31,8 +33,7 @@ var populateCountriesSelect = function(){
   });
 }
 
-var handleCountrySelected = function( ev ) {
-  var countryName = ev.target.value;
+var setCountryInfo = function(countryName){
   var infoDiv = document.querySelector( '#country-info-holder' );
   var ul = document.createElement( 'ul' );
   var country = getCountryByName( countryName );
@@ -44,8 +45,19 @@ var handleCountrySelected = function( ev ) {
     li.innerText = dataKey + ": " + dataValue;
     ul.appendChild( li );
   });
-
   infoDiv.appendChild( ul );
+
+  localStorage.lastCountry = countryName;
+}
+
+var setSelectedCountry = function(countryName){
+  var selectCountries = document.querySelector('#countries-select');
+  selectCountries.value = countryName;
+};
+
+var handleCountrySelected = function( ev ) {
+  var countryName = ev.target.value;
+  setCountryInfo(countryName);
 }
 
 var getCountryByName = function( countryName ) {
