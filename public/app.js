@@ -23,6 +23,8 @@ var requestComplete = function(){
   if(lastCountry) {
     setSelectedCountry(lastCountry);
     setCountryInfo(lastCountry);
+    var borderingCountries = getBorderingCountries(lastCountry);
+    populateBorderingCountries(borderingCountries);
   }
 };
 
@@ -73,7 +75,13 @@ var setCountryInfo = function( countryName) {
 
 var setBorderingCountryInfo = function( countryName ) {
   var infoDiv = document.querySelector( '#bordering-country-info-holder' );
-  populateCountryInfoDiv( infoDiv, countryName );
+  
+  if (countryName ) {
+    populateCountryInfoDiv( infoDiv, countryName );
+  }
+  else {
+    infoDiv.innerHTML = "";
+  }
 }
 
 var populateCountryInfoDiv = function( infoDiv, countryName ) {
@@ -104,6 +112,7 @@ var handleCountrySelected = function( ev ) {
   setCountryInfo(countryName);
 
   populateBorderingCountries(borderingCountries);
+  setBorderingCountryInfo( null );
 }
 
 var handleBorderingCountrySelected = function( ev ) {
