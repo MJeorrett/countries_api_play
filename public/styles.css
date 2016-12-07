@@ -6,4 +6,10 @@ body {
 #map-container {
   width: 500px;
   height: 500px;
+  padding-left: 30px;
+}
+
+#main-container {
+  display: flex;
+  flex-direction: row;
 }
